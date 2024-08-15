@@ -31,6 +31,6 @@ function llf = Box_Cox_llf(x, alpha)
     trans = Box_Cox(x, alpha);
     trans_var = var(trans);
     
-    % log lilelihood function
+    % log-likelihood function
     llf = (alpha - 1) * sum(logdata) - n_samples/2 * log(trans_var);
 end

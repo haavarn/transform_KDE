@@ -17,7 +17,7 @@ function [y, alpha] = Box_Cox(x, alpha)
     %    The Box-Cox transform is given by::
     % 
     %        y = (x.^alpha - 1) / alpha,  for alpha ~= 0
-    %            log(x),                    for alpha == 0
+    %            log(x),                  for alpha == 0
     % 
     %    `Box_Cox` requires the input data to be positive.  Sometimes a Box-Cox
     %    transformation provides a shift parameter to achieve this; `Box_Cox` does
@@ -40,8 +40,8 @@ function [y, alpha] = Box_Cox(x, alpha)
     
     x = x(:);
     if isempty(x); y=0; return; end
-    if ~isreal(x); error('Box_Cox transformation is not defined for complex numbers.'); end
-    if any(x<=0); error('Box_Cox transformation is not defined values \leq 0.'); end
+    if ~isreal(x); error('Box-Cox transformation is not defined for complex numbers.'); end
+    if any(x<=0);  error('Box-Cox transformation is not defined values <= 0.'); end
 
     if isempty(alpha) % alpha is not set. 
         alpha = Box_Cox_normmax(x);

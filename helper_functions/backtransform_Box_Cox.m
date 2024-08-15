@@ -1,15 +1,14 @@
-function f_backtr = backtransform_Box_Cox(x_tr, f_tr, x, alpha)
-    % x_tr = grid in transformed domain x_tr = g_func(x)
-    % f_tr = density in transformed domain
+function pdf_backtransformed = backtransform_Box_Cox(x_BC, pdf_BC, x, alpha)
+    % x_BC = grid in transformed Box-Cox domain, e.g., 500 samples +/- 5 std around mean
+    % pdf_BC = density (KDE) in transformed Box-Cox domain
     % x = target grid
-    % g_x = transform function g applied to x
+    % alpha = Box-Cox transform parameter
 
-    x_tr = x_tr(:);
-    f_tr = f_tr(:);
+    x_BC = x_BC(:);
+    pdf_BC = pdf_BC(:);
     x = x(:);
-    g_x = Box_Cox(x, alpha);
+    g_x = Box_Cox(x, alpha); % target grid mapping to Box-Cox domain for interpolation
 
-
-    chain_rule = abs( d_dx_Box_Cox(x, alpha) ); 
-    f_backtr = interp1(x_tr, f_tr, g_x, 'linear', 0) .* chain_rule;
+    chain_rule = abs( d_dx_Box_Cox(x, alpha) ); % a small regularization term is included here
+    pdf_backtransformed = interp1(x_BC, pdf_BC, g_x, 'linear', 0) .* chain_rule;
 end
